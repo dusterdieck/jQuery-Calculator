@@ -63,7 +63,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Result</h3>
                 </div>
-                <div class="panel-body" id="display">
+                <div class="panel-body">
                     <h1 id="first-number"></h1>
                     <h1 id="operator"></h1>
                     <h1 id="second-number"></h1>
@@ -79,35 +79,57 @@
 
 $(document).ready(function(){
     
-    var firstNumber;
-    var secondNumber;
+    var numbers;
+    var workingIndex;
+    var operator;
     var result;
-
-    initial();
-    
+    var numberDiv;
+    initial();  
 
     function initial() {
-        $('#display').empty();
-        firstNumber = '';
-        secondNumber = '';
-        operator = ''
+        $('#first-number').empty();
+        $('#operator').empty();
+        $('#second-number').empty();
+        $('#result').empty();
+        numberDiv = $('#first-number');
+        numbers = ['',''];
+        workingIndex = 0;
+        operator = '';
         result = '';
-        first();
     }
 
-    function first(){
-        $('.number').on('click',function() {
-            firstNumber += this.value;
-            console.log(firstNumber);
-            $('#first-number').html(firstNumber);
-        });
+    $('.number').on('click',function() {
+        numbers[workingIndex] += this.value;
+        console.log(numbers[workingIndex]);
+        $(numberDiv).text(numbers[workingIndex]);
+        return;
+    });
+
+    $('.operator').on('click',function(){
+        if (workingIndex == 0){ workingIndex++; numberDiv = $('#second-number')}
+        else { }
+            
+        if( this.value == 'plus'){ operator = '+'}
+        else if( this.value == 'divide'){ operator = '/'}
+        else if( this.value == 'minus'){ operator = '-'}
+        else if( this.value == 'times'){ operator = '*'}
+        else if( this.value == 'power'){ operator = '^'}
+        $('#operator').text( operator );
+    });
+
+    $('.equal').on('click',function(){
+        if( operator == '+'){ result = parseInt(numbers[0]) + parseInt(numbers[1])}
+        else if( operator == '-'){ result = parseInt(numbers[0]) - parseInt(numbers[1])}
+        else if( operator == '*'){ result = parseInt(numbers[0]) * parseInt(numbers[1])}
+        else if( operator == '/'){ result = parseInt(numbers[0]) / parseInt(numbers[1])}
+        else if( operator == '^'){ result = Math.pow( parseInt( numbers[0] ), parseInt( numbers[1] ) ) }
+        $('#result').text( result );
+    });
 
 
-
-        $('.clear').on('click',function() {
-            initial();
-        });
-    }
+    $('.clear').on('click',function() {
+         initial();
+    });
 
 
 
