@@ -63,7 +63,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Result</h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" id="display">
                     <h1 id="first-number"></h1>
                     <h1 id="operator"></h1>
                     <h1 id="second-number"></h1>
@@ -78,6 +78,38 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+    
+    var firstNumber;
+    var secondNumber;
+    var result;
+
+    initial();
+    
+
+    function initial() {
+        $('#display').empty();
+        firstNumber = '';
+        secondNumber = '';
+        operator = ''
+        result = '';
+        first();
+    }
+
+    function first(){
+        $('.number').on('click',function() {
+            firstNumber += this.value;
+            console.log(firstNumber);
+            $('#first-number').html(firstNumber);
+        });
+
+
+
+        $('.clear').on('click',function() {
+            initial();
+        });
+    }
+
+
 
 // Your code here...
 
